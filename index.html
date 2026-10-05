@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Simon Allmer Center</title>
+    <meta name="description" content="The Simon Allmer city guide. Where to play Allmer Games, read Allmer Journals and meet the studios: locations, events, news and the Oracle.">
+    <meta name="theme-color" content="#050506">
+    <link rel="icon" type="image/png" href="assets/SimonAllmerCenterLogo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <link rel="stylesheet" href="center.css">
+</head>
+
+<body>
+
+    <!-- ======================= Header ======================= -->
+    <header class="topbar">
+        <a class="brand" href="#" data-top aria-label="Simon Allmer Center">
+            <img src="assets/SimonAllmerCenterLogo.png" alt="" class="brand-mark">
+            <span class="brand-words">
+                <img src="assets/SimonAllmerLogoRightProportionsWhite.png" alt="Simon Allmer" class="brand-wordmark">
+                <span class="brand-sub">Center</span>
+            </span>
+        </a>
+
+        <div class="topbar-context" id="context" aria-live="polite"></div>
+
+        <div class="topbar-clock">
+            <span id="clockDate"></span>
+            <span class="clock-time" id="clockTime"></span>
+        </div>
+    </header>
+
+    <!-- ======================= Overview ======================= -->
+    <main class="overview" id="overview">
+        <div class="grid">
+
+            <!-- 01 City -->
+            <section class="box box-city" aria-labelledby="cityName">
+                <div class="box-label"><span class="no">01</span>City Guide</div>
+                <img src="assets/SimonAllmerCenterLogo.png" alt="" class="city-emblem" aria-hidden="true">
+                <div class="city-head">
+                    <p class="city-coords" id="cityCoords"></p>
+                    <h1 class="city-name" id="cityName">Worldwide</h1>
+                    <p class="city-tally" id="cityTally"></p>
+                </div>
+                <div class="city-foot">
+                    <div class="segmented" id="cityPicker" role="radiogroup" aria-label="City"></div>
+                    <button class="btn solid" data-showmap>
+                        <svg viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg>
+                        Open in Map
+                    </button>
+                </div>
+            </section>
+
+            <!-- 02 Studio -->
+            <section class="box box-studio">
+                <div class="box-label"><span class="no">02</span>Studio</div>
+                <div class="studio-list" id="studioPicker" role="radiogroup" aria-label="Studio"></div>
+            </section>
+
+            <!-- 03 Locations -->
+            <section class="box box-locations">
+                <div class="box-label">
+                    <span class="no">03</span>Locations
+                    <button class="box-link" data-showmap>Open in Map
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
+                </div>
+                <ol class="rows" id="locationList"></ol>
+            </section>
+
+            <!-- 04 Events -->
+            <section class="box box-events">
+                <div class="box-label">
+                    <span class="no">04</span>Events
+                    <button class="box-link" data-showmap>Open in Map
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
+                </div>
+                <div id="eventList"></div>
+            </section>
+
+            <!-- 05 Meditation -->
+            <section class="box box-quote">
+                <div class="box-label"><span class="no">05</span>Meditation <span class="label-aside" id="medNo"></span></div>
+                <blockquote>
+                    <p class="quote-text" id="medText"></p>
+                    <footer><a id="medAuthor" target="_blank" rel="noopener"></a></footer>
+                </blockquote>
+            </section>
+
+            <!-- 06 News -->
+            <section class="box box-news">
+                <div class="box-label"><span class="no">06</span>News <span class="label-aside" id="newsAside"></span></div>
+                <article id="newsBox"></article>
+            </section>
+
+            <!-- 07 Next -->
+            <section class="box box-next">
+                <div class="box-label"><span class="no">07</span>Next Up</div>
+                <div id="nextBox"></div>
+            </section>
+
+            <!-- 08 Instagram -->
+            <section class="box box-insta">
+                <div class="box-label"><span class="no">08</span>Follow</div>
+                <a class="insta" href="https://www.instagram.com/sacenter/" target="_blank" rel="noopener">
+                    <span class="insta-handle">@sacenter</span>
+                    <span class="insta-copy">Never miss an event or an opening.</span>
+                    <span class="btn solid">
+                        <svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/></svg>
+                        Follow on Instagram
+                    </span>
+                </a>
+            </section>
+
+            <!-- 09 Map -->
+            <section class="box box-map" id="mapBox" aria-label="Map">
+                <div class="box-label">
+                    <span class="no">09</span>Map
+                    <span class="label-aside" id="mapTitle"></span>
+                </div>
+                <div class="map-layout">
+                    <aside class="map-side">
+                        <div class="map-side-head">
+                            <div class="segmented small" id="mapCityPicker" role="radiogroup" aria-label="City"></div>
+                            <div class="chips" id="mapStudioPicker" role="radiogroup" aria-label="Studio"></div>
+                        </div>
+                        <div class="map-side-list" id="mapList"></div>
+                    </aside>
+                    <div class="map-stage">
+                        <div id="map" class="map"></div>
+                        <article class="map-card" id="mapCard" hidden></article>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <footer class="colophon">
+            <span>Simon Allmer Center</span>
+            <a href="https://www.instagram.com/sacenter/" target="_blank" rel="noopener">Instagram @sacenter</a>
+            <a href="https://simonallmer.com" target="_blank" rel="noopener">simonallmer.com</a>
+        </footer>
+    </main>
+
+    <!-- ======================= The Oracle ======================= -->
+    <div class="oracle" id="oracle">
+        <section class="oracle-panel" id="oraclePanel" role="dialog" aria-label="The Oracle" aria-hidden="true">
+            <header class="oracle-head">
+                <span class="orb small" aria-hidden="true"></span>
+                <div>
+                    <p class="oracle-name">The Oracle</p>
+                    <p class="oracle-state" id="oracleState">Listening</p>
+                </div>
+                <button class="icon-btn" id="oracleReset" aria-label="Begin again" title="Begin again">
+                    <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg>
+                </button>
+                <button class="icon-btn" id="oracleClose" aria-label="Close" title="Close">
+                    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+            </header>
+            <div class="oracle-log" id="oracleLog" aria-live="polite"></div>
+            <div class="oracle-replies" id="oracleReplies"></div>
+        </section>
+
+        <button class="oracle-fab" id="oracleFab" aria-label="Ask the Oracle" aria-expanded="false">
+            <span class="orb" aria-hidden="true"></span>
+            <span class="fab-label">Ask the Oracle</span>
+        </button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="data/locations.js"></script>
+    <script src="data/events.js"></script>
+    <script src="data/news.js"></script>
+    <script src="data/quotes.js"></script>
+    <script src="data/oracle-core.js"></script>
+    <script src="center.js"></script>
+    <script src="oracle-chat.js"></script>
+</body>
+
+</html>
