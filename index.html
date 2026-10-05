@@ -37,25 +37,9 @@
     <main class="overview" id="overview">
         <div class="grid">
 
-            <!-- 01 Artwork of the Day -->
-            <section class="box box-art" id="artBox" aria-labelledby="artTitle">
-                <div class="art-backdrop" id="artBackdrop" aria-hidden="true"></div>
-                <a class="art-frame" id="artLink" target="_blank" rel="noopener">
-                    <img id="artImg" alt="">
-                </a>
-                <div class="art-caption">
-                    <div class="box-label"><span class="no">01</span>Artwork of the Day <span class="label-aside" id="artNo"></span></div>
-                    <h2 class="art-title" id="artTitle"></h2>
-                    <p class="art-credit" id="artCredit"></p>
-                    <a class="btn" id="artMore" target="_blank" rel="noopener">The Art of Futory
-                        <svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
-                    </a>
-                </div>
-            </section>
-
             <!-- 01 City -->
             <section class="box box-city" aria-labelledby="cityName">
-                <div class="box-label"><span class="no">02</span>City Guide</div>
+                <div class="box-label"><span class="no">01</span>City Guide</div>
                 <img src="assets/SimonAllmerCenterLogo.png" alt="" class="city-emblem" aria-hidden="true">
                 <div class="city-head">
                     <p class="city-coords" id="cityCoords"></p>
@@ -73,14 +57,14 @@
 
             <!-- 02 Studio -->
             <section class="box box-studio">
-                <div class="box-label"><span class="no">03</span>Studio</div>
+                <div class="box-label"><span class="no">02</span>Studio</div>
                 <div class="studio-list" id="studioPicker" role="radiogroup" aria-label="Studio"></div>
             </section>
 
             <!-- 03 Locations -->
             <section class="box box-locations">
                 <div class="box-label">
-                    <span class="no">04</span>Locations
+                    <span class="no">03</span>Locations
                     <button class="box-link" data-showmap>Open in Map
                         <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </button>
@@ -91,7 +75,7 @@
             <!-- 04 Events -->
             <section class="box box-events">
                 <div class="box-label">
-                    <span class="no">05</span>Events
+                    <span class="no">04</span>Events
                     <button class="box-link" data-showmap>Open in Map
                         <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </button>
@@ -101,7 +85,7 @@
 
             <!-- 05 Meditation -->
             <section class="box box-quote">
-                <div class="box-label"><span class="no">06</span>Meditation <span class="label-aside" id="medNo"></span></div>
+                <div class="box-label"><span class="no">05</span>Meditation <span class="label-aside" id="medNo"></span></div>
                 <blockquote>
                     <p class="quote-text" id="medText"></p>
                     <footer><a id="medAuthor" target="_blank" rel="noopener"></a></footer>
@@ -110,19 +94,19 @@
 
             <!-- 06 News -->
             <section class="box box-news">
-                <div class="box-label"><span class="no">07</span>News <span class="label-aside" id="newsAside"></span></div>
+                <div class="box-label"><span class="no">06</span>News <span class="label-aside" id="newsAside"></span></div>
                 <article id="newsBox"></article>
             </section>
 
             <!-- 07 Next -->
             <section class="box box-next">
-                <div class="box-label"><span class="no">08</span>Next Up</div>
+                <div class="box-label"><span class="no">07</span>Next Up</div>
                 <div id="nextBox"></div>
             </section>
 
             <!-- 08 Instagram -->
             <section class="box box-insta">
-                <div class="box-label"><span class="no">09</span>Follow</div>
+                <div class="box-label"><span class="no">08</span>Follow</div>
                 <a class="insta" href="https://www.instagram.com/sacenter/" target="_blank" rel="noopener">
                     <span class="insta-handle">@sacenter</span>
                     <span class="insta-copy">Never miss an event or an opening.</span>
@@ -136,7 +120,7 @@
             <!-- 09 Map -->
             <section class="box box-map" id="mapBox" aria-label="Map">
                 <div class="box-label">
-                    <span class="no">10</span>Map
+                    <span class="no">09</span>Map
                     <span class="label-aside" id="mapTitle"></span>
                 </div>
                 <div class="map-layout">
@@ -193,7 +177,6 @@
     <script src="data/locations.js"></script>
     <script src="data/events.js"></script>
     <script src="data/news.js"></script>
-    <script src="data/artworks.js"></script>
     <script src="data/quotes.js"></script>
     <script src="data/oracle-core.js"></script>
     <script src="center.js"></script>

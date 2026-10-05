@@ -192,26 +192,6 @@
         $('#medNo').textContent = `No. ${String(idx + 1).padStart(2, '0')}`;
     }
 
-    function renderArtwork() {
-        const ARTS = window.ARTWORKS || [];
-        const src = window.ARTWORK_SOURCE || {};
-        const box = $('#artBox');
-        if (!ARTS.length) { box.hidden = true; return; }
-        const idx = dayIndex(ARTS.length), a = ARTS[idx];
-        const sized = `${a.src}?format=2500w`;
-        box.classList.toggle('is-tall', a.h > a.w);
-        box.style.setProperty('--art', `url("${a.src}?format=500w")`);
-        const img = $('#artImg');
-        img.onload = () => img.classList.add('is-loaded');
-        img.alt = `${a.title} — ${a.artist || src.artist}`;
-        img.src = sized;
-        $('#artLink').href = src.url;
-        $('#artMore').href = src.url;
-        $('#artTitle').textContent = a.title;
-        $('#artCredit').innerHTML = `${esc(a.artist || src.artist)}<i>/</i>${esc(src.collection)}`;
-        $('#artNo').textContent = `No. ${String(idx + 1).padStart(2, '0')} / ${ARTS.length}`;
-    }
-
     function renderNews() {
         const match = NEWS.filter(p => state.studio === 'all' || p.studio === state.studio);
         const p = match[0] || NEWS[0];
@@ -481,7 +461,6 @@
     initMap();
     renderAll(false);
     renderQuote();
-    renderArtwork();
     if (location.hash === '#map') showMap();
 
     /* ---------- For the Oracle ---------- */
