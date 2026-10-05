@@ -81,16 +81,14 @@
         return `${Math.abs(c.lat).toFixed(4)}° ${ns}  ·  ${Math.abs(c.lng).toFixed(4)}° ${ew}`;
     }
 
-    /* ============================================================
-       Header clock
-       ============================================================ */
-    function tick() {
+    setInterval(() => renderNext(), 30000);
+
+    // Same index for everyone on a given day; advances at local midnight.
+    function dayIndex(length) {
         const t = now();
-        $('#clockDate').textContent = t.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
-        $('#clockTime').textContent = t.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        const day = Math.floor((t - new Date(t.getFullYear(), 0, 0)) / 864e5) + t.getFullYear() * 366;
+        return day % length;
     }
-    tick();
-    setInterval(() => { tick(); renderNext(); }, 30000);
 
     /* ============================================================
        Overview
@@ -186,14 +184,32 @@
 
     function renderQuote() {
         if (!QUOTES.length) return;
-        const t = now();
-        const day = Math.floor((t - new Date(t.getFullYear(), 0, 0)) / 864e5) + t.getFullYear() * 366;
-        const idx = day % QUOTES.length, q = QUOTES[idx];
+        const idx = dayIndex(QUOTES.length), q = QUOTES[idx];
         $('#medText').textContent = q.text;
         const a = $('#medAuthor');
         a.textContent = q.author;
         if (q.url) a.href = q.url; else a.removeAttribute('href');
         $('#medNo').textContent = `No. ${String(idx + 1).padStart(2, '0')}`;
+    }
+
+    function renderArtwork() {
+        const ARTS = window.ARTWORKS || [];
+        const src = window.ARTWORK_SOURCE || {};
+        const box = $('#artBox');
+        if (!ARTS.length) { box.hidden = true; return; }
+        const idx = dayIndex(ARTS.length), a = ARTS[idx];
+        const sized = `${a.src}?format=2500w`;
+        box.classList.toggle('is-tall', a.h > a.w);
+        box.style.setProperty('--art', `url("${a.src}?format=500w")`);
+        const img = $('#artImg');
+        img.onload = () => img.classList.add('is-loaded');
+        img.alt = `${a.title} — ${a.artist || src.artist}`;
+        img.src = sized;
+        $('#artLink').href = src.url;
+        $('#artMore').href = src.url;
+        $('#artTitle').textContent = a.title;
+        $('#artCredit').innerHTML = `${esc(a.artist || src.artist)}<i>/</i>${esc(src.collection)}`;
+        $('#artNo').textContent = `No. ${String(idx + 1).padStart(2, '0')} / ${ARTS.length}`;
     }
 
     function renderNews() {
@@ -465,6 +481,7 @@
     initMap();
     renderAll(false);
     renderQuote();
+    renderArtwork();
     if (location.hash === '#map') showMap();
 
     /* ---------- For the Oracle ---------- */

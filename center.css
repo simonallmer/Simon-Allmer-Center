@@ -147,24 +147,22 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round
 .topbar-context b { color: var(--pearl); font-weight: 400; }
 .topbar-context .sep { width: 18px; height: 1px; background: var(--champagne-soft); }
 
-.topbar-clock {
+.back-sa {
     justify-self: end;
-    display: flex;
-    align-items: baseline;
-    gap: 0.9rem;
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 0.92rem;
+    padding: 0.55rem 0.95rem;
+    border-radius: var(--r);
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
     color: var(--smoke);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.3s, border-color 0.3s, background 0.3s;
 }
 
-.clock-time {
-    font-family: var(--mono);
-    font-style: normal;
-    font-size: 0.7rem;
-    letter-spacing: 0.14em;
-    color: var(--pearl);
-}
+.back-sa:hover { color: var(--pearl); border-color: var(--line-hi); background: rgba(255, 255, 255, 0.06); }
+.logo-font { font-family: var(--mono); letter-spacing: 0.12em; }
 
 /* ============================================================
    Overview grid
@@ -180,12 +178,14 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round
     gap: var(--gap);
     grid-template-columns: repeat(12, minmax(0, 1fr));
     grid-template-areas:
+        "art  art  art  art  art  art  art  art  art  art    art    art"
         "city city city city city city city city studio studio studio studio"
         "loc  loc  loc  loc  loc  ev   ev   ev   ev   quote quote quote"
         "news news news news news news next next next insta insta insta"
         "map  map  map  map  map  map  map  map  map  map   map   map";
 }
 
+.box-art       { grid-area: art; }
 .box-city      { grid-area: city; }
 .box-studio    { grid-area: studio; }
 .box-locations { grid-area: loc; }
@@ -220,6 +220,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round
 .grid > .box:nth-child(7) { animation-delay: 0.36s; }
 .grid > .box:nth-child(8) { animation-delay: 0.42s; }
 .grid > .box:nth-child(9) { animation-delay: 0.48s; }
+.grid > .box:nth-child(10) { animation-delay: 0.54s; }
 
 @keyframes boxIn { to { opacity: 1; transform: none; } }
 
@@ -282,7 +283,98 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round
     padding: 0.4rem 0 0.8rem;
 }
 
-/* ---------- 01 City ---------- */
+/* ---------- Artwork of the Day ---------- */
+.box-art {
+    padding: 0;
+    height: clamp(380px, 46vw, 640px);
+    background: #000;
+}
+
+.art-backdrop {
+    position: absolute;
+    inset: -60px;
+    background: center / cover no-repeat;
+    background-image: var(--art);
+    filter: blur(44px) brightness(0.42) saturate(1.1);
+    transform: scale(1.1);
+}
+
+.art-frame {
+    position: absolute;
+    inset: 0;
+    display: block;
+    overflow: hidden;
+}
+
+.art-frame img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s var(--ease);
+    animation: drift 40s ease-in-out infinite alternate;
+}
+
+.art-frame img.is-loaded { opacity: 1; }
+
+@keyframes drift {
+    from { transform: scale(1.02); }
+    to { transform: scale(1.09) translate(-1%, -1%); }
+}
+
+/* A tall piece is shown whole, set to the right, over its own glow */
+.box-art.is-tall .art-frame { left: 38%; padding: 22px 22px 22px 0; }
+.box-art.is-tall .art-frame img { object-fit: contain; object-position: right center; animation: none; }
+
+.box-art::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(to top, rgba(5, 5, 6, 0.94) 0%, rgba(5, 5, 6, 0.55) 30%, transparent 62%),
+        linear-gradient(to right, rgba(5, 5, 6, 0.75) 0%, transparent 45%);
+}
+
+.box-art.is-tall::before {
+    background: linear-gradient(to right, rgba(5, 5, 6, 0.6) 0%, transparent 50%);
+}
+
+.art-caption {
+    position: absolute;
+    z-index: 2;
+    left: 28px;
+    right: 28px;
+    bottom: 26px;
+    max-width: 560px;
+    pointer-events: none;
+}
+
+.art-caption a { pointer-events: auto; }
+.art-caption .box-label { margin-bottom: 14px; color: var(--pearl-2); }
+
+.art-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 6vw, 5.6rem);
+    line-height: 0.95;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+}
+
+.art-credit {
+    margin: 0.9rem 0 1.3rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--pearl-2);
+}
+
+.art-credit i { font-style: normal; color: var(--champagne); margin: 0 0.6em; }
+.art-caption .btn { background: rgba(5, 5, 6, 0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+/* ---------- City ---------- */
 .box-city {
     min-height: 430px;
     display: flex;
@@ -1146,6 +1238,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round
     .grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-template-areas:
+            "art art"
             "city city"
             "studio next"
             "loc ev"
@@ -1162,10 +1255,14 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round
 
     .grid {
         grid-template-columns: minmax(0, 1fr);
-        grid-template-areas: "city" "studio" "ev" "loc" "next" "news" "quote" "insta" "map";
+        grid-template-areas: "art" "city" "studio" "ev" "loc" "next" "news" "quote" "insta" "map";
     }
 
-    .topbar-clock #clockDate { display: none; }
+    .box-art { height: 460px; }
+    .box-art.is-tall .art-frame { left: 0; top: 0; bottom: 42%; padding: 16px; }
+    .box-art.is-tall .art-frame img { object-position: center; }
+    .box-art.is-tall::before { background: linear-gradient(to top, rgba(5, 5, 6, 0.95) 0%, rgba(5, 5, 6, 0.6) 40%, transparent 65%); }
+    .art-caption { left: 16px; right: 16px; bottom: 18px; }
     .brand-mark { width: 30px; height: 30px; }
 
     .box { padding: 18px 16px 20px; }
